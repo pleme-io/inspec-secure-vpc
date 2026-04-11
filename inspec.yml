@@ -1,0 +1,38 @@
+name: inspec-secure-vpc
+title: SecureVpc Zero-Trust Compliance Profile
+maintainer: pleme-io
+copyright: pleme-io
+copyright_email: dev@pleme.io
+license: MIT
+summary: >
+  Verify SecureVpc zero-trust architecture compliance against deployed AWS
+  infrastructure. Maps to CIS AWS Foundations v3.0 Section 5, NIST 800-53
+  Rev 5 (SC-7, AC-4, AU-2/6/11, CM-7), and Checkov/Trivy rules.
+version: 0.1.0
+supports:
+  - platform: aws
+inspec_version: '>= 5.0'
+depends:
+  - name: inspec-aws
+    url: https://github.com/inspec/inspec-aws/archive/refs/heads/main.tar.gz
+inputs:
+  - name: vpc_id
+    description: VPC ID to verify
+    type: String
+    required: true
+  - name: vpc_name_prefix
+    description: Name prefix used in resource tags (e.g., seph)
+    type: String
+    required: true
+  - name: expected_retention_days
+    description: Expected flow log retention in days
+    type: Numeric
+    value: 7
+  - name: vpc_cidr
+    description: Expected VPC CIDR block
+    type: String
+    value: '10.0.0.0/16'
+  - name: flow_logs_enabled
+    description: Whether flow logs are expected to be enabled
+    type: String
+    value: 'true'
